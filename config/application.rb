@@ -23,7 +23,7 @@ module HarkoweBackend
 
         resource "*",
           headers: :any,
-          methods: [:get, :post, :put, :patch, :delete, :options],
+          methods: [ :get, :post, :put, :patch, :delete, :options ],
           credentials: true
       end
     end

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    allow_unauthenticated_access only: :create
     def create #method to create a new user
 
         user = User.new(user_params) #create new user object

@@ -16,14 +16,21 @@ module HarkoweBackend
     # Enable cookies
     config.middleware.use ActionDispatch::Cookies
 
+    # Enable Rails session storage for CSRF protection
+    config.middleware.use ActionDispatch::Session::CookieStore,
+      key: "_harkowe_rails_session",
+      same_site: :lax,
+      httponly: true,
+      secure: Rails.env.production?
+
     # Configure CORS
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins "http://localhost:5174"
+        origins "http://localhost:5173"
 
         resource "*",
           headers: :any,
-          methods: [ :get, :post, :put, :patch, :delete, :options ],
+          methods: [:get, :post, :put, :patch, :delete, :options],
           credentials: true
       end
     end

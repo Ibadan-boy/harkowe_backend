@@ -8,6 +8,20 @@ Rails.application.routes.draw do
 
   post "/login", to: "sessions#create"
 
+  delete "/logout", to: "sessions#destroy"
+
+  post "/writings", to: "writings#create"
+
+  get "/csrf_token", to: "csrf_tokens#show"
+
+  get "/fetch_writing", to: "writings#index"
+
+  get "/writings/:id", to: "writings#show"
+
+  delete "/delete_writing/:id", to: "writings#destroy"
+
+  patch "/writings/:id", to: "writings#update"
+
   # Defines the root path route ("/")
   # root "posts#index"
 end

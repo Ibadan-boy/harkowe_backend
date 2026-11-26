@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_11_14_181749) do
+ActiveRecord::Schema[8.0].define(version: 2026_11_20_204847) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,8 +29,23 @@ ActiveRecord::Schema[8.0].define(version: 2026_11_14_181749) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "display_name"
+    t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+    t.index ["public_id"], name: "index_users_on_public_id", unique: true
+  end
+
+  create_table "writings", force: :cascade do |t|
+    t.string "title"
+    t.jsonb "content"
+    t.string "status", default: "draft", null: false
+    t.bigint "user_id", null: false
+    t.uuid "document_id", default: -> { "gen_random_uuid()" }, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_writings_on_document_id", unique: true
+    t.index ["user_id"], name: "index_writings_on_user_id"
   end
 
   add_foreign_key "sessions", "users"
+  add_foreign_key "writings", "users"
 end
